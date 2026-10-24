@@ -1,0 +1,25 @@
+[package]
+name = "alive_synth"
+version = "0.1.0"
+edition = "2021"
+description = "A wavetable and granular synth that feels alive"
+license = "GPL-3.0-or-later"
+
+[workspace]
+members = ["xtask"]
+
+[lib]
+# cdylib is the plugin itself, lib lets tests and tools link against the code
+crate-type = ["cdylib", "lib"]
+
+[dependencies]
+nih_plug = { git = "https://github.com/robbert-vdh/nih-plug.git", features = ["assert_process_allocs"] }
+
+[profile.release]
+lto = "thin"
+strip = "symbols"
+
+[profile.profiling]
+inherits = "release"
+debug = true
+strip = "none"
